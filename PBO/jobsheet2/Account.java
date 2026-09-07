@@ -15,9 +15,26 @@ public class Account {
 
     public void withdraw(double amount) {
         balance = balance - amount;
+        if (isOverdrawn()) {
+            balance = balance + amount;
+            System.out.println("Withdrawal rejected: insufficient balance.");
+        }
     }
 
     public void printInfo() {
         System.out.println(ownerName + " - balance: " + balance);
+    }
+
+    public String formatBalance() {
+        return String.format("%,.2f", balance);
+    }
+
+    public boolean isOverdrawn() {
+        return balance < 0;
+    }
+
+    public void transferTo(Account target, double amount) {
+        this.withdraw(amount);
+        target.deposit(amount);
     }
 }
