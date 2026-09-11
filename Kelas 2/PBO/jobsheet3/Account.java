@@ -4,11 +4,13 @@ public class Account {
     private String accountNumber;
     private String ownerName;
     private double balance;
+    private double dailyWithdrawalLimit;
 
-    public Account(String accountNumber, String ownerName, double balance) {
+    public Account(String accountNumber, String ownerName, double balance, double dailyWithdrawalLimit) {
         this.accountNumber = accountNumber;
         this.ownerName = ownerName;
         this.balance = balance;
+        this.dailyWithdrawalLimit = dailyWithdrawalLimit;
     }
 
     public String getAccountNumber() {
@@ -32,7 +34,7 @@ public class Account {
     }
 
     public boolean withdraw(double amount) {
-        if (amount <= 0 || amount > balance) {
+        if (amount <= 0 || amount > balance || amount > dailyWithdrawalLimit) {
             return false;
         }
         balance -= amount;
