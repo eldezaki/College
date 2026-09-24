@@ -1,37 +1,35 @@
 <?php
+session_start();
 $page_title = "Tambah Anggota";
 include __DIR__ . '/../includes/header.php';
-
-$flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
 ?>
+
 <section>
-    <h2>Tambah Anggota</h2>
+    <h2>Tambah Anggota Baru</h2>
 
-    <?php if ($flash): ?>
-        <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo $flash['message']; ?></p>
-    <?php endif; ?>
+    <form action="proses_tambah.php" method="POST">
+        <div class="form-group">
+            <label for="no_anggota">No. Anggota *</label>
+            <input type="text" id="no_anggota" name="no_anggota" required>
+        </div>
 
-    <form id="form-tambah" method="post" action="proses_tambah.php">
-        <p>
-            <label for="nama">Nama</label><br>
-            <input type="text" id="nama" name="nama">
-        </p>
-        <p>
-            <label for="no_anggota">No. Anggota</label><br>
-            <input type="text" id="no_anggota" name="no_anggota">
-        </p>
-        <p>
-            <label for="alamat">Alamat</label><br>
+        <div class="form-group">
+            <label for="nama">Nama Lengkap *</label>
+            <input type="text" id="nama" name="nama" required>
+        </div>
+
+        <div class="form-group">
+            <label for="alamat">Alamat</label>
             <input type="text" id="alamat" name="alamat">
-        </p>
-        <p>
-            <label for="no_hp">No. HP</label><br>
+        </div>
+
+        <div class="form-group">
+            <label for="no_hp">No. HP</label>
             <input type="text" id="no_hp" name="no_hp">
-        </p>
-        <p>
-            <button type="submit">Simpan</button>
-        </p>
+        </div>
+
+        <button type="submit" class="btn">Simpan</button>
+        <a href="list.php" class="btn btn-secondary">Batal</a>
     </form>
 </section>
 

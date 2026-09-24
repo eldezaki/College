@@ -1,5 +1,5 @@
 <?php
-$host = "127.0.0.1";
+$host = "localhost";
 $port = "5432";
 $db   = "simpus_mini";
 $user = "postgres";

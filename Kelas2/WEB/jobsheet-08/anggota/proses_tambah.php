@@ -1,44 +1,38 @@
 <?php
 session_start();
+require __DIR__ . '/../includes/koneksi.php';
 
-$nama       = trim($_POST['nama'] ?? '');
-$no_anggota = trim($_POST['no_anggota'] ?? '');
-$alamat     = trim($_POST['alamat'] ?? '');
-$no_hp      = trim($_POST['no_hp'] ?? '');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $no_anggota = trim($_POST['no_anggota'] ?? '');
+    $nama       = trim($_POST['nama'] ?? '');
+    $alamat     = trim($_POST['alamat'] ?? '');
+    $no_hp      = trim($_POST['no_hp'] ?? '');
 
-$errors = [];
+    if (!empty($no_anggota) && !empty($nama)) {
+        try {
+            $stmt = $pdo->prepare(
+                "INSERT INTO anggota (no_anggota, nama, alamat, no_hp) 
+                 VALUES (:no_anggota, :nama, :alamat, :no_hp) 
+                 RETURNING id"
+            );
 
-if ($nama === '') {
-    $errors[] = "Nama wajib diisi.";
+            $stmt->execute([
+                'no_anggota' => $no_anggota,
+                'nama'       => $nama,
+                'alamat'     => $alamat,
+                'no_hp'      => $no_hp,
+            ]);
+
+            $_SESSION['flash'] = ['type' => 'success', 'pesan' => 'Anggota berhasil ditambahkan.'];
+            header('Location: list.php');
+            exit;
+        } catch (PDOException $e) {
+            $_SESSION['flash'] = ['type' => 'danger', 'pesan' => 'Gagal menyimpan: No. Anggota sudah digunakan!'];
+            header('Location: tambah.php');
+            exit;
+        }
+    }
 }
-if ($no_anggota === '') {
-    $errors[] = "No. Anggota wajib diisi.";
-}
-
-if (!empty($errors)) {
-    $_SESSION['flash'] = [
-        'type'    => 'error',
-        'message' => implode(' ', $errors)
-    ];
-    header('Location: tambah.php');
-    exit;
-}
-
-if (!isset($_SESSION['anggota'])) {
-    $_SESSION['anggota'] = [];
-}
-
-$_SESSION['anggota'][] = [
-    'no_anggota' => $no_anggota,
-    'nama'       => $nama,
-    'alamat'     => $alamat,
-    'no_hp'      => $no_hp,
-];
-
-$_SESSION['flash'] = [
-    'type'    => 'success',
-    'message' => 'Anggota berhasil ditambahkan.'
-];
 
 header('Location: list.php');
 exit;

@@ -1,5 +1,4 @@
--- Jobsheet 8: Skema awal database simpus_mini (PostgreSQL)
-
+-- Skema Tabel Buku
 CREATE TABLE IF NOT EXISTS buku (
     id SERIAL PRIMARY KEY,
     judul VARCHAR(255) NOT NULL,
@@ -10,6 +9,7 @@ CREATE TABLE IF NOT EXISTS buku (
     kategori VARCHAR(50)
 );
 
+-- Skema Tabel Anggota
 CREATE TABLE IF NOT EXISTS anggota (
     id SERIAL PRIMARY KEY,
     nama VARCHAR(255) NOT NULL,
