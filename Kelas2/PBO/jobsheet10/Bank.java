@@ -18,13 +18,13 @@ public class Bank {
         return true;
     }
 
-    public Account findAccount(String accountNumber) {
+    public Account findAccount(String accountNumber) throws AccountNotFoundException {
         for (int i = 0; i < count; i++) {
             if (accounts[i].getAccountNumber().equals(accountNumber)) {
                 return accounts[i];
             }
         }
-        return null;
+        throw new AccountNotFoundException("Account " + accountNumber + " not found.");
     }
 
     public void printAllAccounts() {
