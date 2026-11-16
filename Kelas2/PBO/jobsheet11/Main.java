@@ -5,10 +5,12 @@ public class Main {
         Customer customer1 = new Customer("Nadia", "0812-0000-0001");
         Customer customer2 = new Customer("Rian", "0812-0000-0002");
         Customer customer3 = new Customer("Sari", "0812-0000-0003");
+        Customer customer4 = new Customer("Budi", "0812-0000-0004");
 
         SavingsAccount acc1 = new SavingsAccount("A001", customer1, 500000, 0.01);
         CheckingAccount acc2 = new CheckingAccount("A002", customer2, 200000, 100000);
         SavingsAccount savings = new SavingsAccount("A003", customer3, 100000, 0.02);
+        BusinessAccount business = new BusinessAccount("A004", customer4, 2000000);
 
         try {
             savings.withdraw(70000);
@@ -28,7 +30,8 @@ public class Main {
         bank.addAccount(acc1);
         bank.addAccount(acc2);
         bank.addAccount(savings);
+        bank.addAccount(business);
         bank.processMonthEnd();
-        bank.printHistory("A003");
+        bank.printAllAccounts();
     }
 }
